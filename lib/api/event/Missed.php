@@ -13,7 +13,7 @@ class Missed extends \API\API
 SELECT
   'XP' AS type,
   p.name AS to_name,
-  'Auto' AS from_name,
+  'NA' AS from_name,
   amount,
   description,
   xp.created_at
