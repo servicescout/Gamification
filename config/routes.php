@@ -121,6 +121,11 @@ $app->post('/api/event/transferGold', function() use ($app)
   $app->processAPI(new API\Event\TransferGold($factory->fromApp($app)));
 });
 
+$app->get('/api/event/levelAnnounce', function() use ($app)
+{
+  $app->processAPI(new API\Event\LevelAnnounce(new \Auth\PublicAccess()));
+});
+
 $app->get('/api/characterClass/list', function() use ($app)
 {
   $factory = new Auth\Factory();

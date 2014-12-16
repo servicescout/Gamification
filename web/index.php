@@ -1,7 +1,9 @@
 <?php
 
+$basePath = realpath(__DIR__ . '/../');
+
 set_include_path(
-  get_include_path() . PATH_SEPARATOR . realpath(__DIR__ . '/../')
+  get_include_path() . PATH_SEPARATOR . $basePath
 );
 
 // composer autoloader
@@ -13,12 +15,13 @@ spl_autoload_register('Autoload::autoload');
 
 Autoload::registerDirectory('lib');
 
-require 'config/loader.php';
-$config = _loadConfig();
+$configInstance = \Util\Config::get();
+$configInstance->importDirectory($basePath . '/config');
+$configInstance->setValue('basePath', $basePath);
 
 $container = new \Illuminate\Container\Container();
 $conFactory = new Illuminate\Database\Connectors\ConnectionFactory($container);
-$con = $conFactory->make($config['database']);
+$con = $conFactory->make($configInstance->getValue('database'));
 
 $resolver = new Illuminate\Database\ConnectionResolver();
 $resolver->addConnection('default', $con);
