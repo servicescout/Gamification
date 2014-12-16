@@ -19,6 +19,7 @@ git clone git@github.com:servicescout/Gamification.git game
 
 Copy the virtual host config file and change the server name if needed
 > Instructions are for CentOS
+
 ```
 cd /var/www/game
 
