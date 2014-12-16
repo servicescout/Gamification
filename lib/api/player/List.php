@@ -4,7 +4,7 @@ namespace API\Player;
 
 class ListAPI extends \API\API
 {
-  public function execute()
+  public function execute(&$response)
   {
     $players = \Model\Player::all()->toArray();
 
@@ -18,6 +18,6 @@ class ListAPI extends \API\API
       return ($a['xp'] < $b['xp']) ? 1 : - 1;
     });
 
-    $this->addParam('players', $players);
+    $response->addParam('players', $players);
   }
 }

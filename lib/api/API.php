@@ -4,50 +4,82 @@ namespace API;
 
 abstract class API
 {
-  private $responseData = array();
+  private $auth;
+  private $payloadData;
 
-  abstract public function execute();
-
-  public function getData()
+  public function __construct(\Auth\Auth $auth, $payload = null)
   {
-    return $this->responseData;
+    $this->auth = $auth;
+    $this->payloadData = json_decode($payload ?: file_get_contents('php://input'), true);
   }
 
   /**
-   * Set the entire response array.
-   * Any previous calls to setData or addParam will be wiped out
-   * 
-   * @param mixed $data
+   * @param Response
    */
-  public function setData($data)
+  abstract protected function execute(&$response);
+
+  protected function validate()
   {
-    $this->responseData = $data;
+    return array();
   }
 
-  /**
-   * Set a portion of the response array
-   * 
-   * @param string $key
-   * @param mixed $value
-   */
-  public function setDataByKey($key, $value)
+  public function process()
   {
-    $this->responseData[$key] = $value;
-  }
+    $response = new Response();
 
-  /**
-   * Add a single entry to the JSON params array
-   * 
-   * @param string $key
-   * @param mixed $value
-   */
-  public function addParam($key, $value)
-  {
-    if (!array_key_exists('params', $this->responseData))
+    try
     {
-      $this->responseData['params'] = array();
+      if (!$this->auth->verify())
+      {
+        $response->addError('Invalid credentials');
+        throw new \Exception\Auth();
+      }
+
+      $errors = $this->validate();
+
+      if (count($errors))
+      {
+        foreach ($errors as $error)
+        {
+          $response->addError($error);
+        }
+
+        throw new \Exception\Validation();
+      }
+
+      $this->execute($response);
+    }
+    catch (\Exception\Auth $ex)
+    {
+      $response->setStatus(401);
+    }
+    catch (\Exception\Validation $ex)
+    {
+      $response->setStatus(400);
+    }
+    catch (\Exception $ex)
+    {
+      $response->addError($ex->getMessage());
+      $response->setStatus(500);
     }
 
-    $this->responseData['params'][$key] = $value;
+    return $response;
+  }
+
+  protected function getAuth()
+  {
+    return $this->auth;
+  }
+
+  protected function getPayloadParameter($name, $default = null)
+  {
+    if (!is_array($this->payloadData))
+    {
+      return $default;
+    }
+
+    return (array_key_exists($name, $this->payloadData))
+      ? $this->payloadData[$name]
+      : $default;
   }
 }

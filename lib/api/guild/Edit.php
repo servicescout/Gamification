@@ -2,23 +2,23 @@
 
 namespace API\Guild;
 
-class Edit extends \API\Post
+class Edit extends \API\API
 {
   private $guildId;
 
-  public function __construct($guildId)
+  public function __construct($auth, $guildId)
   {
-    parent::__construct();
+    parent::__construct($auth);
 
     $this->guildId = $guildId;
   }
 
-  public function execute()
+  public function execute(&$response)
   {
     $guild = \Model\Guild::find($this->guildId);
     $guild->name = $this->getPayloadParameter('name');
     $guild->save();
 
-    $this->addParam('guild', $guild->toArray());
+    $response->addParam('guild', $guild->toArray());
   }
 }

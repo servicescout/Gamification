@@ -26,7 +26,7 @@ $resolver->setDefaultConnection('default');
 
 \Illuminate\Database\Eloquent\Model::setConnectionResolver($resolver);
 
-$app = new \Slim\Slim(array(
+$app = new \Game\Slim(array(
   'log.writer' => new \Log\Syslog(),
   'debug' => false,
 ));

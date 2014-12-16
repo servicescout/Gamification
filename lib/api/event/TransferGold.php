@@ -2,9 +2,9 @@
 
 namespace API\Event;
 
-class TransferGold extends \API\Post
+class TransferGold extends \API\API
 {
-  public function execute()
+  public function execute(&$response)
   {
     $toPlayerId = $this->getPayloadParameter('toPlayerId');
     $fromPlayerId = $this->getPayloadParameter('fromPlayerId');

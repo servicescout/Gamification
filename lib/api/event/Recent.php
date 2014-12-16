@@ -4,11 +4,11 @@ namespace API\Event;
 
 class Recent extends \API\API
 {
-  public function execute()
+  public function execute(&$response)
   {
     $con = \Illuminate\Database\Eloquent\Model::getConnectionResolver()->connection();
 
-    $this->addParam('recent', $con->select(<<<SQL
+    $response->addParam('recent', $con->select(<<<SQL
 
 (
   SELECT

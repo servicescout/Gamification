@@ -67,5 +67,16 @@
         return $http.get('/api/characterClass/list');
       }
     };
+
+    this.auth = {
+      verify: function()
+      {
+        return $http.get('/api/auth/verify');
+      },
+      login: function(credentials)
+      {
+        return $http.post('/api/auth/login', credentials);
+      }
+    };
   }]);
 })(jQuery);

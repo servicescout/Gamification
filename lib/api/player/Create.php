@@ -2,18 +2,18 @@
 
 namespace API\Player;
 
-class Create extends \API\Post
+class Create extends \API\API
 {
   private $passwordHasher;
 
-  public function __construct(\Phpass\Hash $passwordHasher = null)
+  public function __construct($auth, \Phpass\Hash $passwordHasher = null)
   {
-    parent::__construct();
+    parent::__construct($auth);
 
     $this->passwordHasher = $passwordHasher ?: new \Phpass\Hash();
   }
 
-  public function execute()
+  public function execute(&$response)
   {
     $accountData = $this->getPayloadParameter('account');
 
@@ -31,6 +31,6 @@ class Create extends \API\Post
     $player->account()->associate($account);
     $player->save();
 
-    $this->addParam('player', $player->toArray());
+    $response->addParam('player', $player->toArray());
   }
 }

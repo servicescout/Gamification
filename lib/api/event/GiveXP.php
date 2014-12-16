@@ -2,9 +2,9 @@
 
 namespace API\Event;
 
-class GiveXP extends \API\Post
+class GiveXP extends \API\API
 {
-  public function execute()
+  public function execute(&$response)
   {
     $playerId = $this->getPayloadParameter('playerId');
     $amount = $this->getPayloadParameter('amount');

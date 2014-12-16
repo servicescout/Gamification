@@ -2,18 +2,18 @@
 
 namespace API\Player;
 
-class Edit extends \API\Post
+class Edit extends \API\API
 {
   private $playerId;
 
-  public function __construct($playerId)
+  public function __construct($auth, $playerId)
   {
-    parent::__construct();
+    parent::__construct($auth);
 
     $this->playerId = $playerId;
   }
 
-  public function execute()
+  public function execute(&$response)
   {
     $player = \Model\Player::find($this->playerId);
     $account = \Model\Account::find($player->account_id);
@@ -25,6 +25,6 @@ class Edit extends \API\Post
     $player->character_class = $this->getPayloadParameter('character_class');
     $player->push();
 
-    $this->addParam('player', $player->toArray());
+    $response->addParam('player', $player->toArray());
   }
 }

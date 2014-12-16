@@ -4,9 +4,9 @@ namespace API\CharacterClass;
 
 class ListAPI extends \API\API
 {
-  public function execute()
+  public function execute(&$response)
   {
     $class = new \Model\Ref\CharacterClass();
-    $this->addParam('classes', $class->getOpts());
+    $response->addParam('classes', $class->getOpts());
   }
 }

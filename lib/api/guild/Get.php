@@ -6,15 +6,17 @@ class Get extends \API\API
 {
   private $guildId;
 
-  public function __construct($guildId)
+  public function __construct($auth, $guildId)
   {
+    parent::__construct($auth);
+
     $this->guildId = $guildId;
   }
 
-  public function execute()
+  public function execute(&$response)
   {
     $guild = \Model\Guild::find($this->guildId)->toArray();
 
-    $this->addParam('guild', $guild);
+    $response->addParam('guild', $guild);
   }
 }

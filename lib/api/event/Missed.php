@@ -4,11 +4,11 @@ namespace API\Event;
 
 class Missed extends \API\API
 {
-  public function execute()
+  public function execute(&$response)
   {
     $con = \Illuminate\Database\Eloquent\Model::getConnectionResolver()->connection();
 
-    $this->addParam('missed', $con->select(<<<SQL
+    $response->addParam('missed', $con->select(<<<SQL
 
 SELECT
   'XP' AS type,

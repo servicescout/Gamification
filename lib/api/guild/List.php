@@ -4,7 +4,7 @@ namespace API\Guild;
 
 class ListAPI extends \API\API
 {
-  public function execute()
+  public function execute(&$response)
   {
     $guilds = \Model\Guild::all()->toArray();
     $players = \Model\Player::all()->toArray();
@@ -32,6 +32,6 @@ class ListAPI extends \API\API
       }
     }
 
-    $this->addParam('guilds', $guilds);
+    $response->addParam('guilds', $guilds);
   }
 }

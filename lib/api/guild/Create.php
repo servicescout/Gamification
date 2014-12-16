@@ -2,14 +2,14 @@
 
 namespace API\Guild;
 
-class Create extends \API\Post
+class Create extends \API\API
 {
-  public function execute()
+  public function execute(&$response)
   {
     $guild = new \Model\Guild();
     $guild->name = $this->getPayloadParameter('name');
     $guild->save();
 
-    $this->addParam('guild', $guild->toArray());
+    $response->addParam('guild', $guild->toArray());
   }
 }

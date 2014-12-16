@@ -6,15 +6,17 @@ class Get extends \API\API
 {
   private $playerId;
 
-  public function __construct($playerId)
+  public function __construct($auth, $playerId)
   {
+    parent::__construct($auth);
+
     $this->playerId = $playerId;
   }
 
-  public function execute()
+  public function execute(&$response)
   {
     $player = \Model\Player::find($this->playerId)->toArray();
 
-    $this->addParam('player', $player);
+    $response->addParam('player', $player);
   }
 }

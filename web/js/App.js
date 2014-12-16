@@ -6,7 +6,14 @@
   
   app.config(['$routeProvider', function($routeProvider)
   {
-    $routeProvider.when('/', {
+    // public routes
+    $routeProvider.when('/login', {
+      templateUrl: '/partial/Login.html#' + cacheKey,
+      controller: 'LoginController',
+      controllerAs: 'login'
+    })
+
+    .when('/', {
       templateUrl: '/partial/Home.html#' + cacheKey,
       controller: 'HomeController',
       controllerAs: 'home'
@@ -54,5 +61,21 @@
   app.controller('HomeController', [function()
   {
     
+  }]);
+
+  app.run(['$rootScope', 'gameApi', '$location', function($rootScope, gameApi, $location)
+  {
+    var me = this;
+
+    me.hasAccount = false;
+
+    gameApi.auth.verify().success(function()
+    {
+      me.hasAccount = true;
+    })
+    .error(function()
+    {
+      $location.path('/login');
+    });
   }]);
 })(jQuery);
