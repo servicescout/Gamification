@@ -1,0 +1,38 @@
+<p><a href="/#/players">&laquo; Back</a></p>
+
+<h1 ng-hide="gc.newGuild">Edit Player</h1>
+<h1 ng-show="gc.newGuild">Create Player</h1>
+
+<form name="editPlayer" ng-submit="editPlayer.$valid && pc.save()" novalidate>
+  <label>
+    <div>Email</div>
+    <input type="email" ng-model="pc.player.account.email" required placeholder="Email" />
+  </label>
+  <label>
+    <div>Password</div>
+    <input type="password" ng-model="pc.player.password" placeholder="Password" />
+  </label>
+  <label>
+    <div>Name</div>
+    <input type="text" ng-model="pc.player.name" required placeholder="Name" />
+  </label>
+  <label>
+    <div>Guild</div>
+    <select ng-model="pc.player.guild_id">
+      <option ng-repeat="guild in pc.guilds" value="{{ guild.id }}">
+        {{ guild.name }}
+      </option>
+    </select>
+  </label>
+  <label>
+    <div>Character Class</div>
+    <select ng-model="pc.player.character_class">
+      <option ng-repeat="class in pc.characterClasses" value="{{ class }}">
+        {{ class }}
+      </option>
+    </select>
+  </label>
+  <div>
+    <input type="submit" value="Save" />
+  </div>
+</form>

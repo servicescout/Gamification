@@ -1,0 +1,52 @@
+<h1>Events</h1>
+
+<a href="/#/events/give-xp" class="Button">Give XP</a>
+<a href="/#/events/transfer-gold" class="Button">Transfer Gold</a>
+
+<h3>Recent Events</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>To</th>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>From</th>
+      <th>Description</th>
+    </tr>
+  <tbody>
+    <tr ng-repeat="event in events.recentEvents">
+      <td>{{ event.created_at }}</td>
+      <th>{{ event.to_name }}</th>
+      <td>{{ event.type }}</td>
+      <td>{{ event.amount }}</td>
+      <td>{{ event.from_name }}</td>
+      <td>{{ event.description }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Recent Misses (Unrealized XP Opportunities)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>To</th>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>From</th>
+      <th>Description</th>
+    </tr>
+  <tbody>
+    <tr ng-repeat="event in events.missedEvents">
+      <td>{{ event.created_at }}</td>
+      <th>{{ event.to_name }}</th>
+      <td>{{ event.type }}</td>
+      <td>{{ event.amount }}</td>
+      <td>{{ event.from_name }}</td>
+      <td>{{ event.description }}</td>
+    </tr>
+  </tbody>
+</table>

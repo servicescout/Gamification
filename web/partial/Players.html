@@ -1,0 +1,9 @@
+<div class="Guilds">
+  <brick class="Guild" ng-repeat="guild in pc.guilds">
+    <h1>{{ guild.name }}</h1>
+    <ng-include
+      ng-repeat="gamer in guild.players"
+      src="'/partial/GamerCard.html'"
+    ></ng-include>
+  </brick>
+</div>

@@ -1,0 +1,35 @@
+<p><a href="/#/events">&laquo; Back</a></p>
+
+<h1>Transfer Gold</h1>
+
+<form name="transferGold" ng-submit="transferGold.$valid && transfer.save()" novalidate>
+  <label>
+    <div>To Player</div>
+    <select ng-model="transfer.transfer.toPlayerId">
+      <option value="">The Bank</option>
+      <option ng-repeat="player in transfer.players" value="{{ player.id }}">
+        {{ player.name }}
+      </option>
+    </select>
+  </label>
+  <label>
+    <div>From Player</div>
+    <select ng-model="transfer.transfer.fromPlayerId">
+      <option value="">The Bank</option>
+      <option ng-repeat="player in transfer.players" value="{{ player.id }}">
+        {{ player.name }}
+      </option>
+    </select>
+  </label>
+  <label>
+    <div>Amount</div>
+    <input type="text" ng-model="transfer.transfer.amount" required placeholder="Amount" />
+  </label>
+  <label>
+    <div>Description</div>
+    <input type="text" ng-model="transfer.transfer.description" placeholder="Description" />
+  </label>
+  <div>
+    <input type="submit" value="Transfer" />
+  </div>
+</form>

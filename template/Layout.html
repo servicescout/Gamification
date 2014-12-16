@@ -1,0 +1,39 @@
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Gamification Portal</title>
+
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=VT323">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/App.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/MainMenu.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/MainContent.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/GamerCard.css" />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-route.min.js"></script>
+  </head>
+  <body>
+    <div id="AllContent" ng-app="Game">
+      <ul class="MainMenu">
+        <li><a href="/#/">Home</a></li>
+        <li><a href="/#/guilds">Guilds</a></li>
+        <li><a href="/#/players">Players</a></li>
+        <li><a href="/#/events">Events</a></li>
+      </ul>
+      <div class="MainContent" ng-view></div>
+    </div>
+
+    <script src="/js/App.js"></script>
+    <script src="/js/service/Api.js"></script>
+    <script src="/js/controller/Guilds.js"></script>
+    <script src="/js/controller/guilds/Edit.js"></script>
+    <script src="/js/controller/Players.js"></script>
+    <script src="/js/controller/players/Edit.js"></script>
+    <script src="/js/controller/Events.js"></script>
+    <script src="/js/controller/events/TransferGold.js"></script>
+    <script src="/js/controller/events/GiveXP.js"></script>
+  </body>
+</html>

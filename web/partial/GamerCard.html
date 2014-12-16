@@ -1,0 +1,23 @@
+<a class="GamerCard" ng-controller="CardController as card" href="/#/players/{{ card.gamer.id }}">
+  <brick class="GamerCard_avatarWrapper">
+    <div class="GamerCard_avatar" ng-hide="card.gamer.avatar"></div>
+    <div class="GamerCard_avatar" ng-show="card.gamer.avatar" ng-style="{
+      'background-image': 'url(' + card.gamer.avatar + ')'
+    }"></div>
+  </brick><brick class="GamerCard_stats">
+    <brick class="GamerCard_statArea">
+      <div class="GamerCard_name">{{ card.gamer.name }}</div>
+      <div class="GamerCard_class">{{ card.gamer.character_class }}</div>
+      <div class="GamerCard_xp">XP {{ card.gamer.xp }}</div>
+      <div>Level {{ card.gamer.level }}</div>
+    </brick><brick class="GamerCard_statArea GamerCard_statArea-right">
+      <div>Next Level: {{ card.gamer.nextLevel.xp }} XP</div>
+      <div class="GamerCard_progressBar">
+        <div class="GamerCard_innerProgressBar" ng-style="{
+          width: card.gamer.nextLevel.percent + '%'
+        }"></div>
+      </div>
+      <div>Gold {{ card.gamer.gold }}</div>
+    </brick>
+  </brick>
+</div>

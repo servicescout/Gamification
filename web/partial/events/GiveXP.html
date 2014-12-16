@@ -1,0 +1,26 @@
+<p><a href="/#/events">&laquo; Back</a></p>
+
+<h1>Give XP</h1>
+
+<form name="giveXP" ng-submit="giveXP.$valid && xp.save()" novalidate>
+  <label>
+    <div>Player</div>
+    <select ng-model="xp.accrual.playerId">
+      <option value="">Select a player</option>
+      <option ng-repeat="player in xp.players" value="{{ player.id }}">
+        {{ player.name }}
+      </option>
+    </select>
+  </label>
+  <label>
+    <div>Amount</div>
+    <input type="text" ng-model="xp.accrual.amount" required placeholder="Amount" />
+  </label>
+  <label>
+    <div>Description</div>
+    <input type="text" ng-model="xp.accrual.description" placeholder="Description" />
+  </label>
+  <div>
+    <input type="submit" value="Give XP" />
+  </div>
+</form>

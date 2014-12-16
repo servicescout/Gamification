@@ -1,0 +1,8 @@
+.svn
+*.swp
+config.local.php
+/nbproject
+/.idea
+/vendor
+/local
+/web/upload

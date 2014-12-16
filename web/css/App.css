@@ -1,0 +1,80 @@
+html, body {
+  background: darkslateblue;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #fff;
+}
+
+p {
+  margin: 0 0 20px 0;
+  padding: 0;
+}
+
+brick {
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+}
+
+#AllContent {
+  font-family: VT323, arial, sans-serif;
+  min-width: 320px;
+}
+
+select,
+textarea,
+input {
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  font-family: VT323, arial, sans-serif;
+  min-width: 200px;
+  padding: 10px;
+}
+
+select option {
+  background: darkslateblue;
+}
+
+a.Button,
+input[type=submit] {
+  border: 1px solid yellowgreen;
+  color: yellowgreen;
+  display: inline-block;
+  min-width: 100px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+label {
+  display: block;
+  margin-bottom: 20px;
+}
+
+table {
+  border: 1px solid #fff;
+  width: 100%;
+}
+
+table td,
+table th {
+  border: 1px solid #fff;
+  font-weight: normal;
+  padding: 5px;
+  text-align: left;
+}
+
+table td {
+  color: lightgray;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  text-shadow: 1px 1px #000;
+}

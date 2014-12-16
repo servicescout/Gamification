@@ -1,0 +1,16 @@
+.MainMenu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.MainMenu > li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+.MainMenu > li > a {
+  display: block;
+  padding: 10px 20px;
+}

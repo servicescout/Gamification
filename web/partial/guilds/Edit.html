@@ -1,0 +1,9 @@
+<p><a href="/#/guilds">&laquo; Back</a></p>
+
+<h1 ng-hide="gc.newGuild">Edit Guild</h1>
+<h1 ng-show="gc.newGuild">Create Guild</h1>
+
+<form name="editGuild" ng-submit="editGuild.$valid && gc.save()" novalidate>
+  <input type="text" ng-model="gc.guild.name" required placeholder="Name" />
+  <input type="submit" value="Save" />
+</form>

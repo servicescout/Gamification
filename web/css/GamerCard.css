@@ -1,0 +1,69 @@
+.Guild {
+  padding: 10px;
+  width: calc(100% / 3);
+}
+
+.GamerCard {
+  border: 2px solid #fff;
+  display: block;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.GamerCard_avatarWrapper {
+  padding: 10px;
+  width: 110px;
+}
+
+.GamerCard_avatar {
+  background-color: gray;
+  background-size: cover;
+  background-position: center;
+  background-image: url(http://tl-cdn.s3.amazonaws.com/images/logoForFacebook.png);
+  width: 100%;
+  height: 90px;
+}
+
+.GamerCard_stats {
+  padding: 10px 10px 10px 0;
+  width: calc(100% - 110px);
+}
+
+.GamerCard_statArea {
+  width: 50%;
+}
+
+.GamerCard_statArea-right {
+  text-align: right;
+}
+
+.GamerCard_name {
+  font-size: 2rem;
+  margin-bottom: 2px;
+  margin-top: -3px;
+  text-shadow: 2px 2px #000;
+}
+
+.GamerCard_class {
+  color: lightgray;
+  padding-left: 20px;
+}
+
+.GamerCard_xp {
+  margin-top: 8px;
+}
+
+.GamerCard_progressBar {
+  background: gray;
+  height: 24px;
+  margin: 10px 0;
+  position: relative;
+}
+
+.GamerCard_innerProgressBar {
+  background: greenyellow;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  top: 0;
+}

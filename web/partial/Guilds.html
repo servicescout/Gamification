@@ -1,0 +1,24 @@
+<p>
+  <a href="/#/guilds/new" class="Button">Create Guild</a>
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Created</th>
+      <th>Name</th>
+      <th>Player Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="guild in gc.guilds">
+      <td>{{ guild.created_at }}</td>
+      <th>
+        <a href="/#/guilds/{{ guild.id }}">{{ guild.name }}</a>
+      </th>
+      <td>
+        {{ guild.players.length }}
+      </td>
+    </tr>
+  </tbody>
+</table>
