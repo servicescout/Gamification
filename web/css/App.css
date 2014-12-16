@@ -32,6 +32,7 @@ input {
   border: 1px solid #fff;
   color: #fff;
   font-family: VT323, arial, sans-serif;
+  font-size: 1rem;
   min-width: 200px;
   padding: 10px;
 }

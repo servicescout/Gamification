@@ -1,8 +1,36 @@
 <?php
 
-$app->get('/', function()
+$app->get('/', function() use ($app)
 {
-  require_once('template/Layout.html');
+  $app->view('View\Standard');
+
+  $inject = \Middleware\Inject::get();
+
+  $inject->addCSS('//fonts.googleapis.com/css?family=VT323', \Middleware\Inject::LEVEL_BASE);
+  $inject->addCSS('/css/App.css', \Middleware\Inject::LEVEL_TEMPLATE);
+  $inject->addCSS('/css/MainContent.css', \Middleware\Inject::LEVEL_TEMPLATE);
+
+  // grab CSS partial files
+  foreach (Autoload::getFiles(realpath(__DIR__ . '/../web/css/partial'), '*.css') as $file)
+  {
+    $file = preg_replace('#.*?/web/css/#', '/css/', $file);
+    $inject->addCSS($file, \Middleware\Inject::LEVEL_PARTIAL);
+  }
+
+  $inject->addJS('//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js', \Middleware\Inject::LEVEL_BASE);
+  $inject->addJS('//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js', \Middleware\Inject::LEVEL_BASE);
+  $inject->addJS('//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-route.min.js', \Middleware\Inject::LEVEL_BASE);
+  $inject->addJS('/js/App.js', \Middleware\Inject::LEVEL_TEMPLATE);
+  $inject->addJS('/js/service/Api.js', \Middleware\Inject::LEVEL_TEMPLATE);
+
+  // grab js controllers
+  foreach (Autoload::getFiles(realpath(__DIR__ . '/../web/js/controller'), '*.js') as $file)
+  {
+    $file = preg_replace('#.*?/web/js/#', '/js/', $file);
+    $inject->addJS($file, \Middleware\Inject::LEVEL_ACTION);
+  }
+
+  $app->render('template/Layout.html');
 })->name('home');
 
 $app->get('/api/guild/list', function() use ($app)

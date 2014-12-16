@@ -49,9 +49,9 @@ class Autoload
     return self::$instance;
   }
 
-  private static function getFiles($path)
+  public static function getFiles($path, $pattern = '*.php')
   {
-    return self::rglob('*.php', 0, $path);
+    return self::rglob($pattern, 0, $path);
   }
 
   private static function getPHPClasses($file)

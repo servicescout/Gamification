@@ -31,6 +31,7 @@ $app = new \Slim\Slim(array(
   'debug' => false,
 ));
 
+$app->add(\Middleware\Inject::get());
 $app->view('View\JSON');
 
 $app->error(function (Exception $ex) use ($app)
