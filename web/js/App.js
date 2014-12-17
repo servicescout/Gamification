@@ -66,26 +66,36 @@
 
     me.rebuildMenu = function(account)
     {
-      // TODO: Change menu items based on account permissions
-
-      me.menuItems = [
-        {
-          name: 'Home',
-          path: '/'
-        },
-        {
-          name: 'Guilds',
-          path: '/guilds'
-        },
-        {
-          name: 'Players',
-          path: '/players'
-        },
-        {
-          name: 'Events',
-          path: '/events'
-        }
-      ];
+      if (account.permissions.indexOf('Admin') !== -1)
+      {
+        me.menuItems = [
+          {
+            name: 'Home',
+            path: '/'
+          },
+          {
+            name: 'Guilds',
+            path: '/guilds'
+          },
+          {
+            name: 'Players',
+            path: '/players'
+          },
+          {
+            name: 'Events',
+            path: '/events'
+          }
+        ];
+      }
+      else
+      {
+        me.menuItems = [
+          {
+            name: 'Home',
+            path: '/'
+          }
+        ];
+      }
     };
 
     gameApi.auth.verify().success(function(data)
