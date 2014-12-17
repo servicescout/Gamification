@@ -2,7 +2,7 @@
 {
   var app = angular.module('Game');
 
-  app.controller('LoginController', ['gameApi', '$location', function(gameApi, $location)
+  app.controller('LoginController', ['gameApi', '$location', '$scope', function(gameApi, $location, $scope)
   {
     var me = this;
 
@@ -10,9 +10,9 @@
 
     me.login = function()
     {
-      console.log('test');
-      gameApi.auth.login(me.credentials).success(function()
+      gameApi.auth.login(me.credentials).success(function(data)
       {
+        $scope.app.rebuildMenu(data.params.account);
         $location.path('/');
       });
     };

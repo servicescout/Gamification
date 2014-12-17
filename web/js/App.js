@@ -58,24 +58,48 @@
     });
   }]);
 
-  app.controller('HomeController', [function()
-  {
-    
-  }]);
-
-  app.run(['$rootScope', 'gameApi', '$location', function($rootScope, gameApi, $location)
+  app.controller('AppController', ['gameApi', '$location', function(gameApi, $location)
   {
     var me = this;
 
-    me.hasAccount = false;
+    me.menuItems = [];
 
-    gameApi.auth.verify().success(function()
+    me.rebuildMenu = function(account)
     {
-      me.hasAccount = true;
+      // TODO: Change menu items based on account permissions
+
+      me.menuItems = [
+        {
+          name: 'Home',
+          path: '/'
+        },
+        {
+          name: 'Guilds',
+          path: '/guilds'
+        },
+        {
+          name: 'Players',
+          path: '/players'
+        },
+        {
+          name: 'Events',
+          path: '/events'
+        }
+      ];
+    };
+
+    gameApi.auth.verify().success(function(data)
+    {
+      me.rebuildMenu(data.params.account);
     })
     .error(function()
     {
       $location.path('/login');
     });
+  }]);
+
+  app.controller('HomeController', [function()
+  {
+
   }]);
 })(jQuery);

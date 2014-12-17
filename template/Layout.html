@@ -8,12 +8,9 @@
     <!--INJECT_CSS-->
   </head>
   <body>
-    <div id="AllContent" ng-app="Game">
+    <div id="AllContent" ng-app="Game" ng-controller="AppController as app">
       <ul class="MainMenu">
-        <li><a href="/#/">Home</a></li>
-        <li><a href="/#/guilds">Guilds</a></li>
-        <li><a href="/#/players">Players</a></li>
-        <li><a href="/#/events">Events</a></li>
+        <li ng-repeat="item in app.menuItems"><a href="/#{{ item.path }}">{{ item.name }}</a></li>
       </ul>
       <div class="MainContent" ng-view></div>
     </div>
