@@ -60,7 +60,7 @@ SQL;
 
     if (!file_exists($path . '/web/upload/' . $filename . '.wav'))
     {
-      exec('cd ' . $path . '/web/upload && echo "' . $message . '" | text2wave -scale 5 -o ' . $filename . '.wav');
+      exec('cd ' . $path . '/web/upload && echo "' . $message . '" | text2wave -scale 5 -o ' . $filename . '.wav -eval "(voice_cmu_us_clb_arctic_clunits)"');
     }
 
     return array(
