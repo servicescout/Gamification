@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+require_once realpath(__DIR__ . '/../bootstrap.php');
+
+// load test composer classes
+require_once 'test/vendor/autoload.php';
+
+// mock the database to ensure it is never hit by accident
+// tests can set a different connection resolver if needed
+$con = Mockery::mock('Illuminate\Database\Connection');
+
+$resolver = new Illuminate\Database\ConnectionResolver();
+$resolver->addConnection('default', $con);
+$resolver->setDefaultConnection('default');
+
+\Illuminate\Database\Eloquent\Model::setConnectionResolver($resolver);
+
+Autoload::registerDirectory('test/lib');
+
+PHPUnit_TextUI_Command::main();

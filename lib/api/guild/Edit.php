@@ -15,7 +15,7 @@ class Edit extends \API\API
 
   public function execute(&$response)
   {
-    $guild = \Model\Guild::find($this->guildId);
+    $guild = \Model\Entity\Guild::find($this->guildId);
     $guild->name = $this->getPayloadParameter('name');
     $guild->save();
 

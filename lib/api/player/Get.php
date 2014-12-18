@@ -15,7 +15,7 @@ class Get extends \API\API
 
   public function execute(&$response)
   {
-    $player = \Model\Player::find($this->playerId)->toArray();
+    $player = \Model\Entity\Player::find($this->playerId)->toArray();
 
     $response->addParam('player', $player);
   }

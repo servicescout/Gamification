@@ -1,0 +1,7 @@
+{
+  "require":
+  {
+    "phpunit/phpunit": "4.3.*",
+    "mockery/mockery": "@stable"
+  }
+}

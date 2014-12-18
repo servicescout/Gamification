@@ -7,7 +7,7 @@ interface Auth
   public function verify();
 
   /**
-   * \Model\Account
+   * \Model\Entity\Account
    */
   public function getAccount();
 

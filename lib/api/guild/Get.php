@@ -15,7 +15,7 @@ class Get extends \API\API
 
   public function execute(&$response)
   {
-    $guild = \Model\Guild::find($this->guildId)->toArray();
+    $guild = \Model\Entity\Guild::find($this->guildId)->toArray();
 
     $response->addParam('guild', $guild);
   }

@@ -12,7 +12,7 @@ SET SCHEMA 'ref';
 CREATE TYPE character_class AS ENUM
   ('Cleric', 'Fighter', 'Rogue', 'Wizard', 'Paladin', 'Shaman', 'Druid', 'Ranger');
 
-CREATE TYPE permission AS ENUM ('Admin', 'Banker');
+CREATE TYPE permission AS ENUM ('Admin', 'Banker', 'Trainer');
 
 -- core tables
 CREATE SCHEMA public;
@@ -31,8 +31,9 @@ CREATE TABLE account (
   id SERIAL PRIMARY KEY,
   created_at TIMESTAMP NOT NULL,
   updated_at TIMESTAMP NOT NULL,
+  username VARCHAR UNIQUE,
   email VARCHAR NOT NULL UNIQUE,
-  password_hash VARCHAR NOT NULL,
+  password_hash VARCHAR,
   permissions ref.permission[]
 );
 

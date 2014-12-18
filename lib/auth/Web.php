@@ -15,7 +15,7 @@ class Web implements Auth
     $accountId = $this->getSession()->getValue('auth.accountId');
 
     return ($accountId)
-      ? \Model\Account::find($accountId)
+      ? \Model\Entity\Account::find($accountId)
       : null;
   }
 

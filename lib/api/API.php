@@ -23,6 +23,11 @@ abstract class API
     return array();
   }
 
+  protected function requirePermissions()
+  {
+    return array();
+  }
+
   public function process()
   {
     $response = new Response();
@@ -33,6 +38,20 @@ abstract class API
       {
         $response->addError('Invalid credentials');
         throw new \Exception\Auth();
+      }
+
+      if (count($this->requirePermissions()))
+      {
+        foreach ($this->requirePermissions() as $permission)
+        {
+          $account = $this->auth->getAccount();
+
+          if (is_null($account) || !$account->hasPermission($permission))
+          {
+            $response->addError('Lacking permissions');
+            throw new \Exception\Validation();
+          }
+        }
       }
 
       $errors = $this->validate();

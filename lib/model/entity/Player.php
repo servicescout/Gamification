@@ -1,6 +1,6 @@
 <?php
 
-namespace Model;
+namespace Model\Entity;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class Player extends Model
 
   public function account()
   {
-    return $this->belongsTo('Model\Account');
+    return $this->belongsTo('Model\Entity\Account');
   }
 
   public function toArray()

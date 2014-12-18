@@ -15,8 +15,8 @@ class Edit extends \API\API
 
   public function execute(&$response)
   {
-    $player = \Model\Player::find($this->playerId);
-    $account = \Model\Account::find($player->account_id);
+    $player = \Model\Entity\Player::find($this->playerId);
+    $account = \Model\Entity\Account::find($player->account_id);
 
     $account->email = $this->getPayloadParameter('email');
 

@@ -17,13 +17,13 @@ class Create extends \API\API
   {
     $accountData = $this->getPayloadParameter('account');
 
-    $account = new \Model\Account();
+    $account = new \Model\Entity\Account();
     $account->email = $accountData['email'];
     $account->password_hash = $this->passwordHasher->hashPassword(
       $this->getPayloadParameter('password'));
     $account->save();
 
-    $player = new \Model\Player();
+    $player = new \Model\Entity\Player();
     $player->name = $this->getPayloadParameter('name');
     $player->guild_id = $this->getPayloadParameter('guild_id');
     $player->character_class = $this->getPayloadParameter('character_class');

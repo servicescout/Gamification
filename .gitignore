@@ -4,5 +4,6 @@ config.local.php
 /nbproject
 /.idea
 /vendor
+/test/vendor
 /local
 /web/upload

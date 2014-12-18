@@ -6,7 +6,7 @@ class Create extends \API\API
 {
   public function execute(&$response)
   {
-    $guild = new \Model\Guild();
+    $guild = new \Model\Entity\Guild();
     $guild->name = $this->getPayloadParameter('name');
     $guild->save();
 

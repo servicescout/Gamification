@@ -6,7 +6,7 @@ class ListAPI extends \API\API
 {
   public function execute(&$response)
   {
-    $class = new \Model\Ref\CharacterClass();
+    $class = new \Model\Entity\Ref\CharacterClass();
     $response->addParam('classes', $class->getOpts());
   }
 }

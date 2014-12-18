@@ -1,14 +1,18 @@
 <?php
 
-namespace Model\Ref;
+namespace Model\Entity\Ref;
 
-class CharacterClass
+class Permission
 {
+  const ADMIN = 'Admin';
+  const BANKER = 'Banker';
+  const TRAINER = 'Trainer';
+
   public function getOpts()
   {
     $resolver = \Illuminate\Database\Eloquent\Model::getConnectionResolver();
 
-    $unnest = $resolver->connection()->select('SELECT UNNEST(ENUM_RANGE(NULL::ref.character_class))');
+    $unnest = $resolver->connection()->select('SELECT UNNEST(ENUM_RANGE(NULL::ref.permission))');
 
     $opts = array();
 

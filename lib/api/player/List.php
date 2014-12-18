@@ -6,7 +6,7 @@ class ListAPI extends \API\API
 {
   public function execute(&$response)
   {
-    $players = \Model\Player::all()->toArray();
+    $players = \Model\Entity\Player::all()->toArray();
 
     usort($players, function($a, $b)
     {

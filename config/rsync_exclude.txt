@@ -6,3 +6,4 @@ config.local.php
 .idea/
 /test
 /local
+/web/upload

@@ -1,33 +1,7 @@
 <?php
 
-$basePath = realpath(__DIR__ . '/../');
-
-set_include_path(
-  get_include_path() . PATH_SEPARATOR . $basePath
-);
-
-// composer autoloader
-require 'vendor/autoload.php';
-
-// TakeLessons autoloading
-require 'autoload.php';
-spl_autoload_register('Autoload::autoload');
-
-Autoload::registerDirectory('lib');
-
-$configInstance = \Util\Config::get();
-$configInstance->importDirectory($basePath . '/config');
-$configInstance->setValue('basePath', $basePath);
-
-$container = new \Illuminate\Container\Container();
-$conFactory = new Illuminate\Database\Connectors\ConnectionFactory($container);
-$con = $conFactory->make($configInstance->getValue('database'));
-
-$resolver = new Illuminate\Database\ConnectionResolver();
-$resolver->addConnection('default', $con);
-$resolver->setDefaultConnection('default');
-
-\Illuminate\Database\Eloquent\Model::setConnectionResolver($resolver);
+require_once realpath(__DIR__ . '/../bootstrap.php');
+require_once 'bootstrapDb.php';
 
 $app = new \Game\Slim(array(
   'log.writer' => new \Log\Syslog(),

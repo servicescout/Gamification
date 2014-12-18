@@ -1,11 +1,11 @@
 <?php
 
-namespace Model\Event;
+namespace Model\Entity;
 
 use Illuminate\Database\Eloquent\Model;
 
-class XPAccrual extends Model
+class Guild extends Model
 {
-  protected $table = 'event.xp_accrual';
+  protected $table = 'public.guild';
   public function getDates() { return array(); }
 }

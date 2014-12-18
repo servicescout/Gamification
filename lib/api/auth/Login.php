@@ -5,12 +5,15 @@ namespace API\Auth;
 class Login extends \API\API
 {
   private $hasher;
+  private $retriever;
 
-  public function __construct(\Auth\Auth $auth, Phpass\Hash $hasher = null)
+  public function __construct(\Auth\Auth $auth, Phpass\Hash $hasher = null,
+   \Model\Retriever $retriever = null)
   {
     parent::__construct($auth);
 
     $this->hasher = $hasher ?: new \Phpass\Hash();
+    $this->retriever = $retriever ?: new \Model\Retriever();
   }
 
   protected function execute(&$response)
@@ -19,7 +22,7 @@ class Login extends \API\API
     $password = $this->getPayloadParameter('password');
 
     $account = ($email)
-      ? \Model\Account::where('email', '=', $email)->first()
+      ? $this->retriever->get('Model\Entity\Account')->where('email', '=', $email)->first()
       : null;
 
     if (is_null($account) || !$this->hasher->checkPassword($password, $account->password_hash))
@@ -28,7 +31,7 @@ class Login extends \API\API
       throw new \Exception\Validation();
     }
 
-    \Auth\Session::get()->setValue('auth', array(
+    $this->getAuth()->getSession()->setValue('auth', array(
       'accountId' => $account->id,
     ));
 

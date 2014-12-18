@@ -1,11 +1,11 @@
 <?php
 
-namespace Model\Event;
+namespace Model\Entity\Event;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GoldTransfer extends Model
+class XPAccrual extends Model
 {
-  protected $table = 'event.gold_transfer';
+  protected $table = 'event.xp_accrual';
   public function getDates() { return array(); }
 }

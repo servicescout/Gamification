@@ -131,3 +131,11 @@ $app->get('/api/characterClass/list', function() use ($app)
   $factory = new Auth\Factory();
   $app->processAPI(new API\CharacterClass\ListAPI($factory->fromApp($app)));
 });
+
+$app->post('/api/slack/xp', function() use ($app)
+{
+  $auth = new \Auth\Slack($app->request->post(), \Util\Config::get());
+  $api = new \API\Slack\XP($auth, $app->request->post());
+
+  $app->processAPI($api);
+});
