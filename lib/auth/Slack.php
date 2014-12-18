@@ -6,8 +6,10 @@ class Slack implements Auth
 {
   private $requestData;
   private $config;
+  private $retriever;
 
-  public function __construct(array $requestArray, \Util\Config $config)
+  public function __construct(array $requestArray, \Util\Config $config,
+   \Model\Retriever $retriever = null)
   {
     $requestData = new \Util\Config();
 
@@ -18,6 +20,7 @@ class Slack implements Auth
 
     $this->requestData = $requestData;
     $this->config = $config;
+    $this->retriever = $retriever ?: new \Model\Retriever();
   }
 
   public function verify()
@@ -33,7 +36,8 @@ class Slack implements Auth
     }
 
     // find an account for the username
-    return \Model\Entity\Account::where('username', '=', $this->requestData->getValue('user_name'))->first();
+    return $this->retriever->get('Model\Entity\Account')
+      ->where('username', '=', $this->requestData->getValue('user_name'))->first();
   }
 
   /**

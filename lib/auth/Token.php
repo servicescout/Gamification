@@ -6,9 +6,10 @@ class Token implements Auth
 {
   private $token;
 
-  public function __construct($token)
+  public function __construct($token, Session $session = null)
   {
     $this->token = $token;
+    $this->session = $session ?: Session::get();
   }
 
   public function verify()
@@ -23,6 +24,6 @@ class Token implements Auth
 
   public function getSession()
   {
-    return Session::get();
+    return $this->session;
   }
 }

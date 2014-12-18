@@ -23,7 +23,8 @@ CREATE TABLE guild (
   id SERIAL PRIMARY KEY,
   created_at TIMESTAMP NOT NULL,
   updated_at TIMESTAMP NOT NULL,
-  name VARCHAR NOT NULL UNIQUE
+  name VARCHAR NOT NULL UNIQUE,
+  username VARCHAR UNIQUE
 );
 
 -- a user who can log in to the system (may or may not be a player)

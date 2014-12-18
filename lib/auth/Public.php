@@ -4,6 +4,17 @@ namespace Auth;
 
 class PublicAccess implements Auth
 {
+  private $session;
+
+  /**
+   * 
+   * @param \Auth\Session $session
+   */
+  public function __construct(Session $session = null)
+  {
+    $this->session = $session ?: Session::get();
+  }
+
   public function verify()
   {
     return true;
@@ -16,6 +27,6 @@ class PublicAccess implements Auth
 
   public function getSession()
   {
-    return Session::get();
+    return $this->session;
   }
 }

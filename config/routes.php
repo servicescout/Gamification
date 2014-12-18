@@ -46,7 +46,8 @@ $app->post('/api/auth/login', function() use ($app)
 
 $app->get('/api/auth/logout', function() use ($app)
 {
-  $app->processAPI(new API\Auth\Logout(new Auth\PublicAccess()));
+  $factory = new Auth\Factory();
+  $app->processAPI(new API\Auth\Logout($factory->fromApp($app)));
 });
 
 $app->get('/api/guild/list', function() use ($app)

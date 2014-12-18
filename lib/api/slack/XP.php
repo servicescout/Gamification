@@ -2,29 +2,8 @@
 
 namespace API\Slack;
 
-class XP extends \API\API
+class XP extends Slack
 {
-  private $requestData;
-  private $apiFactory;
-  private $retriever;
-
-  public function __construct(\Auth\Auth $auth, $requestArray, \API\Factory $apiFactory = null,
-   \Model\Retriever $retreiver = null)
-  {
-    parent::__construct($auth);
-
-    $requestData = new \Util\Config();
-
-    foreach ($requestArray as $name => $value)
-    {
-      $requestData->setValue($name, $value);
-    }
-
-    $this->requestData = $requestData;
-    $this->apiFactory = $apiFactory ?: new \API\Factory();
-    $this->retriever = $retreiver ?: new \Model\Retriever();
-  }
-
   /**
    * 
    * @param \API\Response $response
@@ -63,30 +42,5 @@ class XP extends \API\API
     }
 
     $response->setData('XP Awarded Successfully');
-  }
-
-  private function parseUsername($recipient, &$response)
-  {
-    // simple username entry
-    $account = $this->retriever->get('Model\Entity\Account')
-      ->where('username', '=', $recipient)->first();
-
-    if ($account instanceof \Model\Entity\Account)
-    {
-      $player = $account->player;
-
-      if (!($player instanceof \Model\Entity\Player))
-      {
-        $response->setData('Could not find players for:' . $recipient);
-        throw new \Exception\Validation();
-      }
-
-      return array(
-        $player->id,
-      );
-    }
-
-    $response->setData('Could not find players for:' . $recipient);
-    throw new \Exception\Validation();
   }
 }

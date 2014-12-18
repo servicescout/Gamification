@@ -4,6 +4,21 @@ namespace Auth;
 
 class Web implements Auth
 {
+  private $session;
+  private $retriever;
+
+  /**
+   * 
+   * @param \Auth\Session $session
+   * @param \Model\Retriever $retriever
+   */
+  public function __construct(Session $session = null,
+    \Model\Retriever $retriever = null)
+  {
+    $this->session = $session ?: Session::get();
+    $this->retriever = $retriever ?: new \Model\Retriever();
+  }
+
   public function verify()
   {
     return !is_null($this->getAccount());
@@ -12,15 +27,15 @@ class Web implements Auth
   public function getAccount()
   {
     // use the web session only
-    $accountId = $this->getSession()->getValue('auth.accountId');
+    $accountId = $this->session->getValue('auth.accountId');
 
     return ($accountId)
-      ? \Model\Entity\Account::find($accountId)
+      ? $this->retriever->get('\Model\Entity\Account')->find($accountId)
       : null;
   }
 
   public function getSession()
   {
-    return Session::get();
+    return $this->session;
   }
 }
