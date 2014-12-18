@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit>
+<listeners>
+  <listener class="Mockery\Adapter\Phpunit\TestListener"></listener>
+</listeners>
+<filter> 
+  <whitelist>
+    <directory suffix=".php">../lib</directory>
+  </whitelist>
+</filter>
+</phpunit>

@@ -17,6 +17,11 @@ class Session
     return self::$instance;
   }
 
+  public function destroy()
+  {
+    session_destroy();
+  }
+
   public function setValue($key, $value)
   {
     $_SESSION[$key] = $value;

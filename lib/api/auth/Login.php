@@ -7,10 +7,10 @@ class Login extends \API\API
   private $hasher;
   private $retriever;
 
-  public function __construct(\Auth\Auth $auth, Phpass\Hash $hasher = null,
-   \Model\Retriever $retriever = null)
+  public function __construct(\Auth\Auth $auth, \Phpass\Hash $hasher = null,
+   \Model\Retriever $retriever = null, $payload = null)
   {
-    parent::__construct($auth);
+    parent::__construct($auth, $payload);
 
     $this->hasher = $hasher ?: new \Phpass\Hash();
     $this->retriever = $retriever ?: new \Model\Retriever();
