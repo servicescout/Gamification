@@ -33,7 +33,7 @@ abstract class Slack extends \API\API
       return array_map(function($p)
       {
         return $p->id;
-      }, $this->retriever->get('Model\Entity\Player')->all());
+      }, $this->retriever->get('Model\Entity\Player')->get()->all());
     }
 
     if (preg_match('/^guild:/', $recipient))
@@ -41,9 +41,10 @@ abstract class Slack extends \API\API
       $recipient = preg_replace('/^guild:/', '', $recipient);
 
       $players = $this->retriever->get('Model\Entity\Player')
-        ->join('guild', 'player.guild_id', 'guild.id')
+        ->select('player.id as id')
+        ->join('guild', 'player.guild_id', '=', 'guild.id')
         ->where('guild.username', '=', $recipient)
-        ->all();
+        ->get()->all();
 
       if (count($players))
       {

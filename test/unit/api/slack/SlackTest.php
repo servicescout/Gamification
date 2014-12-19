@@ -19,7 +19,7 @@ class SlackTest extends \Test\TestCase
     $apiFactory = m::mock('API\Factory');
 
     $retriever = m::mock('Model\Retriever');
-    $retriever->shouldReceive('get->all')->once()->andReturn($players);
+    $retriever->shouldReceive('get->get->all')->once()->andReturn($players);
 
     $api = m::mock('API\Slack\Slack', array(
       $auth,
@@ -48,7 +48,7 @@ class SlackTest extends \Test\TestCase
     $apiFactory = m::mock('API\Factory');
 
     $retriever = m::mock('Model\Retriever');
-    $retriever->shouldReceive('get->join->where->all')->once()->andReturn($players);
+    $retriever->shouldReceive('get->select->join->where->get->all')->once()->andReturn($players);
 
     $api = m::mock('API\Slack\Slack', array(
       $auth,
