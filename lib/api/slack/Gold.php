@@ -22,7 +22,7 @@ class Gold extends Slack
 
     if ($this->countArgs() === 0)
     {
-      $response->setData($fromPlayer->getGold());
+      $response->setData('You have ' . $fromPlayer->getGold() . ' gold!');
       return;
     }
 
@@ -59,15 +59,15 @@ class Gold extends Slack
       {
         $response->setStatus($item->getStatus());
         $response->setData((isset($data['errors']))
-          ? implode(', ', $data['errors'])
+          ? implode("\n", $data['errors'])
           : 'An error occurred');
 
         return;
       }
     }
 
-    $messages[] = 'Gold transferred Successfully';
+    $messages[] = 'Gold transferred successfully';
 
-    $response->setData(implode(', ', $messages));
+    $response->setData(implode("\n", $messages));
   }
 }

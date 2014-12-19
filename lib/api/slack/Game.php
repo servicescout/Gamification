@@ -33,7 +33,6 @@ class Game extends Slack
         return;
     }
 
-    $response->addError('Unrecognized command: ' . $command);
-    throw new \Exception\Validation();
+    $response->setData('Unrecognized command: ' . $command);
   }
 }

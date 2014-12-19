@@ -20,7 +20,16 @@ class Stats extends Slack
       return;
     }
 
-    $response->setData(json_encode($fromPlayer->getStatsArray()));
-    return;
+    $stats = $fromPlayer->getStatsArray();
+
+    $response->setData(<<<STR
+Name: {$fromPlayer->name}
+XP: {$stats['xp']}
+Level: {$stats['level']}
+Gold: {$stats['gold']}
+Percent to Next Level: {$stats['nextLevel']['percent']}%
+XP Needed for Next Level: {$stats['nextLevel']['xp']}
+STR
+      );
   }
 }

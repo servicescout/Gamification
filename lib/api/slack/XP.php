@@ -42,15 +42,15 @@ class XP extends Slack
       {
         $response->setStatus($item->getStatus());
         $response->setData((isset($data['errors']))
-          ? implode(', ', $data['errors'])
+          ? implode("\n", $data['errors'])
           : 'An error occurred');
 
         return;
       }
     }
 
-    $messages[] = 'XP Awarded Successfully';
+    $messages[] = 'XP awarded successfully!';
 
-    $response->setData(implode(', ', $messages));
+    $response->setData(implode("\n", $messages));
   }
 }

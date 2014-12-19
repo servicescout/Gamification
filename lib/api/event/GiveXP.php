@@ -41,7 +41,7 @@ class GiveXP extends \API\API
 
     if ($start != $end)
     {
-      $response->addParam('message', "{$player->name} advanced to level {$end}");
+      $response->addParam('message', "{$player->name} advanced to level {$end}!");
     }
   }
 }

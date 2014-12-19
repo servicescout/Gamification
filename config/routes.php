@@ -138,5 +138,16 @@ $app->post('/api/slack/game', function() use ($app)
   $auth = new \Auth\Slack($app->request->post(), \Util\Config::get());
   $api = new \API\Slack\Game($auth, $app->request->post());
 
-  $app->processAPI($api);
+  $response = $api->process();
+
+  $data = $response->getData();
+
+  if (is_string($data))
+  {
+    echo $data;
+  }
+  else
+  {
+    echo json_encode($data);
+  }
 });
