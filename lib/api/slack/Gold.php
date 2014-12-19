@@ -35,6 +35,11 @@ class Gold extends Slack
 
     foreach ($playerIds as $playerId)
     {
+      if ($playerId == $fromPlayer->id)
+      {
+        continue;
+      }
+
       $payload = json_encode(array(
         'toPlayerId' => $playerId,
         'fromPlayerId' => $fromPlayer->id,
@@ -44,6 +49,12 @@ class Gold extends Slack
 
       $api = $this->apiFactory->eventTransferGold($this->getAuth(), $payload);
       $responses[] = $api->process();
+    }
+
+    if (count($responses) === 0)
+    {
+      $response->setData('No action taken');
+      return;
     }
 
     foreach ($responses as $item)

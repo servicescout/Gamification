@@ -31,6 +31,11 @@ class Game extends Slack
         $api->process($response);
 
         return;
+      case 'help':
+        $api = new Help($this->getAuth(), $this->requestData->all());
+        $api->process($response);
+
+        return;
     }
 
     $response->setData('Unrecognized command: ' . $command);

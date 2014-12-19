@@ -71,7 +71,8 @@ CREATE TABLE gold_transfer (
   description VARCHAR,
 
   -- must have at least a 'from' or 'to' player
-  CHECK (from_player_id IS NOT NULL OR to_player_id IS NOT NULL)
+  CHECK (from_player_id IS NOT NULL OR to_player_id IS NOT NULL),
+  CHECK (from_player_id != to_player_id)
 );
 
 CREATE TABLE xp_accrual (
