@@ -58,7 +58,7 @@ class XP extends Slack
       }
     }
 
-    $slackUrl = $this->config->get('slack.hookUrl');
+    $slackUrl = $this->config->getValue('slack.hookUrl');
 
     // send the messages so far back into Slack
     if (count($messages) && $slackUrl)
