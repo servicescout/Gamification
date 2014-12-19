@@ -30,9 +30,7 @@ class Slack implements Auth
 
   public function getAccount()
   {
-    $slackConfig = $this->config->getValue('slack');
-
-    if ($slackConfig['teamId'] != $this->requestData->getValue('team_id'))
+    if ($this->config->getValue('slack.teamId') != $this->requestData->getValue('team_id'))
     {
       return null;
     }

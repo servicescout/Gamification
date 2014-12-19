@@ -140,3 +140,11 @@ $app->post('/api/slack/xp', function() use ($app)
 
   $app->processAPI($api);
 });
+
+$app->post('/api/slack/gold', function() use ($app)
+{
+  $auth = new \Auth\Slack($app->request->post(), \Util\Config::get());
+  $api = new \API\Slack\Gold($auth, $app->request->post());
+
+  $app->processAPI($api);
+});

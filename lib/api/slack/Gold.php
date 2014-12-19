@@ -1,8 +1,67 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace API\Slack;
 
+class Gold extends Slack
+{
+  /**
+   * 
+   * @param \API\Response $response
+   */
+  protected function execute(&$response)
+  {
+    $text = $this->requestData->getValue('text');
+
+    list($recipient, $amount, $description) = str_getcsv($text, ' ', '\'');
+
+    $playerIds = $this->parseUsername($recipient, $response);
+
+    $responses = array();
+    $messages = array();
+
+    $fromPlayer = $this->getAuth()->getAccount()->player;
+
+    if (!$fromPlayer instanceof \Model\Entity\Player)
+    {
+      $response->setStatus(400);
+      $response->setData('Account is not associated with a player');
+
+      return;
+    }
+
+    foreach ($playerIds as $playerId)
+    {
+      $payload = json_encode(array(
+        'toPlayerId' => $playerId,
+        'fromPlayerId' => $fromPlayer->id,
+        'amount' => $amount,
+        'description' => $description,
+      ));
+
+      $api = $this->apiFactory->eventTransferGold($this->getAuth(), $payload);
+      $responses[] = $api->process();
+    }
+
+    foreach ($responses as $item)
+    {
+      $data = $item->getData();
+
+      if (isset($data['params']) && isset($data['params']['message']))
+      {
+        $messages[] = $data['params']['message'];
+      }
+
+      if ($item->getStatus() !== 200)
+      {
+        $response->setStatus($item->getStatus());
+        $response->setData('An error occurred');
+
+        return;
+      }
+    }
+
+    $messages[] = 'Gold transferred Successfully';
+
+    $response->setData(implode(', ', $messages));
+  }
+}
