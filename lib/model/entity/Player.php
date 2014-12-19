@@ -26,9 +26,13 @@ class Player extends Model
   {
     $stats = $this->getStatsArray();
     $helper = new \Game\Level\Helper();
+    $config = \Util\Config::get();
 
     return array_merge(parent::toArray(), array(
       'account' => Account::find($this->account_id)->toArray(),
+      'avatar' => (!is_null($this->avatar))
+        ? $config->getValue('baseUrl') . $this->avatar
+        : null,
       'level' => $helper->getLevelForXP($stats['xp']),
       'xp' => $stats['xp'],
       'gold' => $stats['gold'],
