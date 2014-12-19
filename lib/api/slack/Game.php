@@ -6,9 +6,8 @@ class Game extends Slack
 {
   protected function execute(&$response)
   {
-    $text = $this->requestData->getValue('text');
-    $parts = str_getcsv($text, ' ', '\'');
-    $command = reset($parts);
+    $args = $this->getArgs(true);
+    $command = reset($args);
 
     switch ($command)
     {
@@ -34,7 +33,7 @@ class Game extends Slack
         return;
     }
 
-    $response->addError('Unrecognized command');
+    $response->addError('Unrecognized command: ' . $command);
     throw new \Exception\Validation();
   }
 }

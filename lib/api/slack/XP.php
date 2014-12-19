@@ -10,9 +10,7 @@ class XP extends Slack
    */
   protected function execute(&$response)
   {
-    $text = $this->requestData->getValue('text');
-
-    list($command, $recipient, $amount, $description) = str_getcsv($text, ' ', '\'');
+    list($recipient, $amount, $description) = $this->getArgs();
 
     $playerIds = $this->parseUsername($recipient, $response);
 

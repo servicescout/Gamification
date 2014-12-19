@@ -20,21 +20,18 @@ class Gold extends Slack
       return;
     }
 
-    $text = $this->requestData->getValue('text');
-
-    if (trim($text) === 'gold')
+    if ($this->countArgs() === 0)
     {
       $response->setData($fromPlayer->getGold());
       return;
     }
 
-    list($command, $recipient, $amount, $description) = str_getcsv($text, ' ', '\'');
+    list($recipient, $amount, $description) = $this->getArgs();
 
     $playerIds = $this->parseUsername($recipient, $response);
 
     $responses = array();
     $messages = array();
-
 
     foreach ($playerIds as $playerId)
     {

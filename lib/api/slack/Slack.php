@@ -25,6 +25,24 @@ abstract class Slack extends \API\API
     $this->retriever = $retreiver ?: new \Model\Retriever();
   }
 
+  public function countArgs($includeCommand = false)
+  {
+    return count($this->getArgs($includeCommand));
+  }
+
+  public function getArgs($includeCommand = false)
+  {
+    $text = $this->requestData->getValue('text');
+    $args = str_getcsv($text, ' ', '\'');
+
+    if (!$includeCommand)
+    {
+      array_shift($args);
+    }
+
+    return $args;
+  }
+
   public function parseUsername($recipient, &$response)
   {
     // XP for everyone!
