@@ -14,10 +14,13 @@ class TransferGold extends \API\API
       $errors[] = 'Amount is invalid';
     }
 
+    $allowBanker = (is_null($this->getPayloadParameter('toPlayerId'))
+      || is_null($this->getPayloadParameter('fromPlayerId')));
+
     $account = $this->getAuth()->getAccount();
 
     // banker can transfer gold as he/she pleases
-    if (!$account->hasPermission(\Model\Entity\Ref\Permission::BANKER))
+    if (!$allowBanker || !$account->hasPermission(\Model\Entity\Ref\Permission::BANKER))
     {
       $player = $account->getPlayer();
 
