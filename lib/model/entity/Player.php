@@ -14,11 +14,36 @@ class Player extends Model
     return $this->belongsTo('Model\Entity\Account');
   }
 
+  public function getCurrentLevel()
+  {
+    $stats = $this->getStatsArray();
+    $helper = new \Game\Level\Helper();
+
+    return $helper->getLevelForXP($stats['xp']);
+  }
+
   public function toArray()
+  {
+    $stats = $this->getStatsArray();
+    $helper = new \Game\Level\Helper();
+
+    return array_merge(parent::toArray(), array(
+      'account' => Account::find($this->account_id)->toArray(),
+      'level' => $helper->getLevelForXP($stats['xp']),
+      'xp' => $stats['xp'],
+      'gold' => $stats['gold'],
+      'nextLevel' => array(
+        'percent' => $helper->getPercentToNextLevel($stats['xp']),
+        'xp' => $helper->getXPNeededForNextLevel($stats['xp']),
+      ),
+    ));
+  }
+
+  protected function getStatsArray()
   {
     $con = $this->getConnection();
 
-    $stats = $con->selectOne(<<<SQL
+    return $con->selectOne(<<<SQL
 
 SELECT
   (SELECT COALESCE(SUM(amount), 0)
@@ -33,18 +58,5 @@ SQL
       , array(
         'player' => $this->id,
       ));
-
-    $helper = new \Game\Level\Helper();
-
-    return array_merge(parent::toArray(), array(
-      'account' => Account::find($this->account_id)->toArray(),
-      'level' => $helper->getLevelForXP($stats['xp']),
-      'xp' => $stats['xp'],
-      'gold' => $stats['gold'],
-      'nextLevel' => array(
-        'percent' => $helper->getPercentToNextLevel($stats['xp']),
-        'xp' => $helper->getXPNeededForNextLevel($stats['xp']),
-      ),
-    ));
   }
 }
