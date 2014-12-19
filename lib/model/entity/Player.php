@@ -34,10 +34,14 @@ SQL
         'player' => $this->id,
       ));
 
+    $config = \Util\Config::get();
     $helper = new \Game\Level\Helper();
 
     return array_merge(parent::toArray(), array(
       'account' => Account::find($this->account_id)->toArray(),
+      'avatar' => (!is_null($this->avatar))
+        ? $config->getValue('baseUrl') . $this->avatar
+        : null,
       'level' => $helper->getLevelForXP($stats['xp']),
       'xp' => $stats['xp'],
       'gold' => $stats['gold'],
