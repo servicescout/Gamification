@@ -11,6 +11,13 @@ class Factory
    */
   public function fromApp(\Slim\Slim $app)
   {
+    $headers = apache_request_headers();
+
+    if (isset($headers['Authorization']))
+    {
+      return new Token($headers['Authorization']);
+    }
+
     return new Web();
   }
 }

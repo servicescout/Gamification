@@ -33,8 +33,9 @@ CREATE TABLE account (
   created_at TIMESTAMP NOT NULL,
   updated_at TIMESTAMP NOT NULL,
   username VARCHAR UNIQUE,
-  email VARCHAR NOT NULL UNIQUE,
+  email VARCHAR UNIQUE,
   password_hash VARCHAR,
+  api_token VARCHAR UNIQUE,
   permissions ref.permission[]
 );
 
