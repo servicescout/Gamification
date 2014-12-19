@@ -40,7 +40,7 @@ class XPTest extends \Test\TestCase
     $api = new XP($auth, array(
       'team_id' => 'fooTeamId',
       'user_id' => 'fooUserId',
-      'text' => 'fooRecipient fooAmount fooDescription',
+      'text' => 'fooCommand fooRecipient fooAmount fooDescription',
     ), $factory, $retreiver);
 
     $response = $api->process();

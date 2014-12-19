@@ -10,15 +10,6 @@ class Gold extends Slack
    */
   protected function execute(&$response)
   {
-    $text = $this->requestData->getValue('text');
-
-    list($recipient, $amount, $description) = str_getcsv($text, ' ', '\'');
-
-    $playerIds = $this->parseUsername($recipient, $response);
-
-    $responses = array();
-    $messages = array();
-
     $fromPlayer = $this->getAuth()->getAccount()->player;
 
     if (!$fromPlayer instanceof \Model\Entity\Player)
@@ -28,6 +19,22 @@ class Gold extends Slack
 
       return;
     }
+
+    $text = $this->requestData->getValue('text');
+
+    if (trim($text) === 'gold')
+    {
+      $response->setData($fromPlayer->getGold());
+      return;
+    }
+
+    list($command, $recipient, $amount, $description) = str_getcsv($text, ' ', '\'');
+
+    $playerIds = $this->parseUsername($recipient, $response);
+
+    $responses = array();
+    $messages = array();
+
 
     foreach ($playerIds as $playerId)
     {
@@ -54,7 +61,9 @@ class Gold extends Slack
       if ($item->getStatus() !== 200)
       {
         $response->setStatus($item->getStatus());
-        $response->setData('An error occurred');
+        $response->setData((isset($data['errors']))
+          ? implode(', ', $data['errors'])
+          : 'An error occurred');
 
         return;
       }

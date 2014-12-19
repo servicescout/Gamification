@@ -133,26 +133,10 @@ $app->get('/api/characterClass/list', function() use ($app)
   $app->processAPI(new API\CharacterClass\ListAPI($factory->fromApp($app)));
 });
 
-$app->post('/api/slack/xp', function() use ($app)
+$app->post('/api/slack/game', function() use ($app)
 {
   $auth = new \Auth\Slack($app->request->post(), \Util\Config::get());
-  $api = new \API\Slack\XP($auth, $app->request->post());
-
-  $app->processAPI($api);
-});
-
-$app->post('/api/slack/gold', function() use ($app)
-{
-  $auth = new \Auth\Slack($app->request->post(), \Util\Config::get());
-  $api = new \API\Slack\Gold($auth, $app->request->post());
-
-  $app->processAPI($api);
-});
-
-$app->post('/api/slack/bank', function() use ($app)
-{
-  $auth = new \Auth\Slack($app->request->post(), \Util\Config::get());
-  $api = new \API\Slack\Bank($auth, $app->request->post());
+  $api = new \API\Slack\Game($auth, $app->request->post());
 
   $app->processAPI($api);
 });

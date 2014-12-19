@@ -17,7 +17,7 @@ class Bank extends Slack
   {
     $text = $this->requestData->getValue('text');
 
-    list($recipient, $amount, $description) = str_getcsv($text, ' ', '\'');
+    list($command, $recipient, $amount, $description) = str_getcsv($text, ' ', '\'');
 
     $playerIds = $this->parseUsername($recipient, $response);
 
@@ -51,7 +51,9 @@ class Bank extends Slack
       if ($item->getStatus() !== 200)
       {
         $response->setStatus($item->getStatus());
-        $response->setData('An error occurred');
+        $response->setData((isset($data['errors']))
+          ? implode(', ', $data['errors'])
+          : 'An error occurred');
 
         return;
       }

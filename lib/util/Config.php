@@ -39,6 +39,11 @@ class Config
     $this->config = $config;
   }
 
+  public function all()
+  {
+    return $this->config;
+  }
+
   public function getValue($name, $default = null)
   {
     // a . signifies a nested item

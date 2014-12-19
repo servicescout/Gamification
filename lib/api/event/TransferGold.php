@@ -22,7 +22,7 @@ class TransferGold extends \API\API
     // banker can transfer gold as he/she pleases
     if (!$allowBanker || !$account->hasPermission(\Model\Entity\Ref\Permission::BANKER))
     {
-      $player = $account->getPlayer();
+      $player = $account->player;
 
       if (is_null($player) || ($player->id != $this->getPayloadParameter('fromPlayerId')))
       {

@@ -28,9 +28,9 @@ abstract class API
     return array();
   }
 
-  public function process()
+  public function process($response = null)
   {
-    $response = new Response();
+    $response = $response ?: new Response();
 
     try
     {
