@@ -41,9 +41,31 @@ class Config
 
   public function getValue($name, $default = null)
   {
-    return array_key_exists($name, $this->config)
-      ? $this->config[$name]
+    // a . signifies a nested item
+    $parts = explode('.', $name);
+    $firstPart = array_shift($parts);
+
+    $val = array_key_exists($firstPart, $this->config)
+      ? $this->config[$firstPart]
       : $default;
+
+    if (!is_null($val))
+    {
+      foreach ($parts as $part)
+      {
+        if (isset($val[$part]))
+        {
+          $val = $val[$part];
+        }
+        else
+        {
+          $val = $default;
+          break;
+        }
+      }
+    }
+
+    return $val;
   }
 
   public function setValue($name, $value)

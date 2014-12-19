@@ -17,6 +17,7 @@ class XP extends Slack
     $playerIds = $this->parseUsername($recipient, $response);
 
     $responses = array();
+    $messages = array();
 
     foreach ($playerIds as $playerId)
     {
@@ -32,6 +33,13 @@ class XP extends Slack
 
     foreach ($responses as $item)
     {
+      $data = $item->getData();
+
+      if (isset($data['params']) && isset($data['params']['message']))
+      {
+        $messages[] = $data['params']['message'];
+      }
+
       if ($item->getStatus() !== 200)
       {
         $response->setStatus($item->getStatus());
@@ -41,6 +49,8 @@ class XP extends Slack
       }
     }
 
-    $response->setData('XP Awarded Successfully');
+    $messages[] = 'XP Awarded Successfully';
+
+    $response->setData(implode(', ', $messages));
   }
 }

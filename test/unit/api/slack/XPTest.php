@@ -20,6 +20,9 @@ class XPTest extends \Test\TestCase
 
     $subResponse = m::mock('API\Response');
     $subResponse->shouldReceive('getStatus')->once()->andReturn(200);
+    $subResponse->shouldReceive('getData')->once()->andReturn(array(
+      'params' => array('message' => 'fooMessage'),
+    ));
 
     $giveApi = m::mock('API\Event\GiveXP');
     $giveApi->shouldReceive('process')->once()->andReturn($subResponse);
@@ -42,6 +45,6 @@ class XPTest extends \Test\TestCase
 
     $response = $api->process();
 
-    self::assertEquals('XP Awarded Successfully', $response->getData());
+    self::assertEquals('fooMessage, XP Awarded Successfully', $response->getData());
   }
 }
