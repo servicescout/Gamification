@@ -4,6 +4,15 @@ namespace API\Slack;
 
 class XP extends Slack
 {
+  private $config;
+
+  public function __construct(\Auth\Auth $auth, $requestArray, \API\Factory $apiFactory = null, \Model\Retriever $retreiver = null, \Util\Config $config = null)
+  {
+    parent::__construct($auth, $requestArray, $apiFactory, $retreiver);
+
+    $this->config = $config ?: \Util\Config::get();
+  }
+
   /**
    * 
    * @param \API\Response $response
@@ -47,6 +56,29 @@ class XP extends Slack
 
         return;
       }
+    }
+
+    $slackUrl = $this->config->get('slack.hookUrl');
+
+    // send the messages so far back into Slack
+    if (count($messages) && $slackUrl)
+    {
+      $session = curl_init();
+
+      $json = json_encode(array(
+        'text' => implode("\n", $messages),
+      ));
+
+      curl_setopt($session, CURLOPT_URL, $slackUrl);
+      curl_setopt($session, CURLOPT_POST, true);
+      curl_setopt($session, CURLOPT_POSTFIELDS, $json);
+      curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($session, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($json),
+      ));
+
+      curl_exec($session);
     }
 
     $messages[] = 'XP awarded successfully!';
