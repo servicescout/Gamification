@@ -101,7 +101,7 @@ $app->post('/api/player/create', function() use ($app)
 $app->get('/api/event/recent', function() use ($app)
 {
   $factory = new Auth\Factory();
-  $app->processAPI(new API\Event\Recent($factory->fromApp($app)));
+  $app->processAPI(new API\Event\Recent($factory->fromApp($app), $app->request->get()));
 });
 
 $app->get('/api/event/missed', function() use ($app)
