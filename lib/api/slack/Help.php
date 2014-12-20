@@ -11,44 +11,36 @@ class Help extends Slack
   protected function execute(&$response)
   {
     $response->setData(<<<STR
+```
+Usage: /game COMMAND [ARGS]
 
-Commands
---------
+The most commonly used game commands are:
+      gold      Transfer gold to another player or view your own gold total
+      stats     View stats for your player
+      xp        Award xp to another player
+      bank      Transfer money (or take money away) from a player to the bank
 
-XP - Award xp to another player
-Permissions required: Trainer
+Tip: You can use "guild:guildname" or "*" to indicate multiple recipients
 
-Usage:
-/game xp recipient amount description
+Command usage:
+      gold (transfer)   /game gold [recipient] [amount] [description]
+      gold (view)       /game gold
+      stats             /game stats
+      xp                /game xp [recipient] [amount] [description]
+      bank              /game bank [recipient] [amount] [description]
 
-Example:
-/game xp bklima 200 'Fantastic demo!'
+Command permissions:
+      gold              None
+      stats             None
+      xp                Trainer
+      bank              Banker
 
-GOLD - Transfer gold to another player or view your own gold total
-Permissions required: None
-
-Usage:
-/game gold
-/game gold recipient amount description
-
-Example:
-/game gold tstella 10 'Thanks for fixing my machine!'
-
-STATS - View stats for your player
-Permissions required: None
-
-Usage:
-/game stats
-
-BANK - Transfer money (or take money away) from a player to the bank
-Permissions required: Banker
-
-Usage:
-/game bank recipient amount description
-
-Example:
-/game bank pdetagyos -20 'Service fees'
-
+Examples:
+      /game gold tstella 10 'Thanks for fixing my machine!'
+      /game stats
+      /game xp bklima 200 'Fantastic demo!'
+      /game bank pdetagyos -20 'Service fees'
+```
 STR
       );
   }
