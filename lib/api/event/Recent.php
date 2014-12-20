@@ -32,7 +32,9 @@ class Recent extends \API\API
   SELECT
     'Gold' AS type,
     COALESCE(p.name, 'The Bank') AS to_name,
+    p.id AS to_id,
     COALESCE(pp.name, 'The Bank') AS from_name,
+    pp.id AS from_id,
     amount,
     description,
     g.created_at
@@ -44,7 +46,7 @@ SQL;
 
     if (!is_null($playerId))
     {
-      $sql .= 'WHERE p.id = :playerId';
+      $sql .= 'WHERE (p.id = :playerId OR pp.id = :playerId)';
     }
 
     $sql .= <<<SQL
@@ -54,7 +56,9 @@ SQL;
   SELECT
     'XP' AS type,
     p.name AS to_name,
+    p.id AS to_id,
     'NA' AS from_name,
+    NULL::INT AS from_id,
     amount,
     description,
     xp.created_at
