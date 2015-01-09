@@ -4,6 +4,8 @@ namespace API\Event;
 
 class TransferGold extends \API\API
 {
+  private $retriever;
+
   protected function validate()
   {
     $errors = array();
@@ -45,11 +47,33 @@ class TransferGold extends \API\API
     $amount = $this->getPayloadParameter('amount');
     $description = $this->getPayloadParameter('description');
 
+    $this->retriever = new \Model\Retriever();
+    $toPlayer = ($toPlayerId) ? $this->retriever->get('Model\Entity\Player')
+      ->find($toPlayerId) : null;
+    $fromPlayer = ($fromPlayerId) ? $this->retriever->get('Model\Entity\Player')
+      ->find($fromPlayerId) : null;
+
     $transfer = new \Model\Entity\Event\GoldTransfer();
     $transfer->to_player_id = $toPlayerId;
     $transfer->from_player_id = $fromPlayerId;
     $transfer->amount = $amount;
     $transfer->description = $description;
     $transfer->save();
+
+    $message = null;
+
+    if ($toPlayer && $fromPlayer)
+    {
+      $message = "{$fromPlayer->name} gave {$toPlayer->name} {$amount} gold";
+    }
+    elseif ($toPlayer)
+    {
+      $message = "{$toPlayer->name} received {$amount} gold";
+    }
+
+    if ($message)
+    {
+      $response->addParam('message', $message);
+    }
   }
 }

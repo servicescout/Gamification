@@ -4,6 +4,8 @@ namespace API\Slack;
 
 class Gold extends Slack
 {
+  private $config;
+
   /**
    * 
    * @param \API\Response $response
@@ -75,6 +77,30 @@ class Gold extends Slack
 
         return;
       }
+    }
+
+    $this->config = \Util\Config::get();
+    $slackUrl = $this->config->getValue('slack.hookUrl');
+
+    // send the messages so far back into Slack
+    if (count($messages) && $slackUrl)
+    {
+      $session = curl_init();
+
+      $json = json_encode(array(
+        'text' => implode("\n", $messages),
+      ));
+
+      curl_setopt($session, CURLOPT_URL, $slackUrl);
+      curl_setopt($session, CURLOPT_POST, true);
+      curl_setopt($session, CURLOPT_POSTFIELDS, $json);
+      curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($session, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($json),
+      ));
+
+      curl_exec($session);
     }
 
     $messages[] = 'Gold transferred successfully';
