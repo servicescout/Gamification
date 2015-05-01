@@ -2,12 +2,14 @@
 
 namespace API\Guild;
 
+use Model\Entity;
+
 class ListAPI extends \API\API
 {
   public function execute(&$response)
   {
-    $guilds = \Model\Entity\Guild::all()->toArray();
-    $players = \Model\Entity\Player::all()->toArray();
+    $guilds = Entity\Guild::all()->toArray();
+    $players = Entity\Player::whereRaw('deleted_at IS NULL')->get()->toArray();
 
     usort($players, function($a, $b)
     {
