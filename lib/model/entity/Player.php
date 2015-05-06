@@ -48,9 +48,12 @@ class Player extends Model
     $stats = $con->selectOne(<<<SQL
 
 SELECT
-  (SELECT COALESCE(SUM(amount), 0)
-  FROM event.xp_accrual
-  WHERE player_id = :player) AS xp,
+  (
+    SELECT COALESCE(SUM(amount), 0)
+    FROM event.xp_accrual
+    WHERE player_id = :player
+      AND created_at >= :startDate
+  ) AS xp,
   (SELECT COALESCE(SUM(CASE WHEN to_player_id = :player THEN amount ELSE -amount END), 0)
   FROM event.gold_transfer
   WHERE (from_player_id = :player OR to_player_id = :player)) AS gold
@@ -59,6 +62,7 @@ SELECT
 SQL
       , array(
         'player' => $this->id,
+        'startDate' => '2015-04-01',
       ));
 
     $helper = new \Game\Level\Helper();

@@ -20,13 +20,14 @@ class LevelAnnounce extends \API\API
 WITH t_starting_stats AS (
   SELECT player_id, SUM(amount) AS xp, GET_LEVEL(SUM(amount)::INT) AS level
   FROM event.xp_accrual
-  WHERE created_at < :start
+  WHERE created_at < :window
+    AND created_at >= :startDate
   GROUP BY player_id
 ),
 t_window_stats AS (
   SELECT player_id, SUM(amount) AS xp
   FROM event.xp_accrual
-  WHERE created_at >= :start
+  WHERE created_at >= :window
   GROUP BY player_id
 )
 SELECT p.name, GET_LEVEL((COALESCE(t.xp, 0)::INT + w.xp)::INT) AS level
@@ -40,7 +41,8 @@ SQL;
     $connection = \Illuminate\Database\Eloquent\Model::getConnectionResolver()->connection();
     $increases = $connection->select($sql, array(
       // increases in the last 20 seconds
-      'start' => date('Y-m-d H:i:s', time() - 20),
+      'window' => date('Y-m-d H:i:s', time() - 20),
+      'startDate' => '2015-04-01',
     ));
 
     $messages = array();
