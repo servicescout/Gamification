@@ -71,6 +71,11 @@ class TransferGold extends \API\API
       $message = "{$toPlayer->name} received {$amount} gold";
     }
 
+    if ($description)
+    {
+      $message .= ": '{$description}'";
+    }
+
     if ($message)
     {
       $response->addParam('message', $message);
