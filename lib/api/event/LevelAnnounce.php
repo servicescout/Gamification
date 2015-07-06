@@ -39,10 +39,17 @@ WHERE COALESCE(t.level, 1)::INT < GET_LEVEL((COALESCE(t.xp, 0)::INT + w.xp)::INT
 SQL;
 
     $connection = \Illuminate\Database\Eloquent\Model::getConnectionResolver()->connection();
+
+    // calculate the start of the quarter
+    $year = date('Y');
+    $month = (floor((date('n') - 1) / 3) * 3) + 1;
+    $day = '01';
+    $startOfQuarter = "$year-$month-$day";
+
     $increases = $connection->select($sql, array(
       // increases in the last 20 seconds
       'window' => date('Y-m-d H:i:s', time() - 20),
-      'startDate' => '2015-04-01',
+      'startDate' => $startOfQuarter,
     ));
 
     $messages = array();

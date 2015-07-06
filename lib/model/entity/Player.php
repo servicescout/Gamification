@@ -45,6 +45,12 @@ class Player extends Model
   {
     $con = $this->getConnection();
 
+    // calculate the start of the quarter
+    $year = date('Y');
+    $month = (floor((date('n') - 1) / 3) * 3) + 1;
+    $day = '01';
+    $startOfQuarter = "$year-$month-$day";
+
     $stats = $con->selectOne(<<<SQL
 
 SELECT
@@ -62,7 +68,7 @@ SELECT
 SQL
       , array(
         'player' => $this->id,
-        'startDate' => '2015-04-01',
+        'startDate' => $startOfQuarter,
       ));
 
     $helper = new \Game\Level\Helper();
